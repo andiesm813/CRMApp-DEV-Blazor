@@ -1,0 +1,105 @@
+@page "/accounts"
+@using ECommerce
+@using Northwind
+@using CRMAppData
+@inject NavigationManager NavigationManager
+@inject INorthwindService northwindService
+
+<div class="row-layout accounts-container">
+    <div class="column-layout group">
+        <div class="column-layout group_1">
+            <div class="column-layout group_2">
+                <div class="row-layout header">
+                    <div class="row-layout page-title">
+                        <div class="row-layout group_3">
+                            <img src="assets/Accounts Icon - Green.svg" class="image" />
+                        </div>
+                        <h6 class="h6">
+                            Accounts
+                        </h6>
+                    </div>
+                    <div class="row-layout buttons">
+                        <IgbButton Variant="ButtonVariant.Flat" class="user-input user-input_3" accounts-scope>
+                            <span class="material-icons">
+                                business
+                            </span>
+                            <span>New Account</span>
+                            <IgbRipple></IgbRipple>
+                        </IgbButton>
+                        <IgbButton Variant="ButtonVariant.Flat" class="user-input user-input_4" accounts-scope>
+                            <span class="material-icons">
+                                search
+                            </span>
+                            <span>Discover companies</span>
+                            <IgbRipple></IgbRipple>
+                        </IgbButton>
+                        <IgbButton Variant="ButtonVariant.Flat" class="user-input user-input_5" accounts-scope>
+                            <span class="material-icons">
+                                import_export
+                            </span>
+                            <span>Import</span>
+                            <IgbRipple></IgbRipple>
+                        </IgbButton>
+                    </div>
+                </div>
+                <div class="row-layout filters-and-sorting">
+                    <div class="row-layout group_4">
+                        <span class="user-input">Select not yet available in Blazor</span>
+                        <IgbInput Placeholder="Search accounts" Outlined="false" class="input" accounts-scope>
+                            <span slot="prefix">
+                                <span class="material-icons icon">
+                                    search
+                                </span>
+                            </span>
+                        </IgbInput>
+                    </div>
+                    <div class="row-layout group_5">
+                        <IgbButton Variant="ButtonVariant.Flat" @onclick="@(e => _dropdown!.ToggleAsync(_button))" @ref="_button" class="user-input user-input_6" accounts-scope>
+                            <span>Recently Updated</span>
+                            <span class="material-icons">
+                                keyboard_arrow_down
+                            </span>
+                            <IgbRipple></IgbRipple>
+                        </IgbButton>
+                        <IgbDropdown @ref="_dropdown" class="dropdown" accounts-scope>
+                            <IgbDropdownItem>
+                                Name
+                            </IgbDropdownItem>
+                            <IgbDropdownItem>
+                                Recently Updated
+                            </IgbDropdownItem>
+                        </IgbDropdown>
+                    </div>
+                </div>
+            </div>
+            <IgbGrid Data="northwindCustomers" PrimaryKey="ContactName" DisplayDensity="DisplayDensity.Cosy" AllowFiltering="true" FilterMode="FilterMode.ExcelStyleFilter" AutoGenerate="false" @onclick="@(e => Navigate("account-sample"))" class="ig-typography grid" accounts-scope>
+                <IgbColumn Field="CustomerID" DataType="GridColumnDataType.String" Header="customerID" Sortable="true" Selectable="false"></IgbColumn>
+                <IgbColumn Field="CompanyName" DataType="GridColumnDataType.String" Header="companyName" Sortable="true" Selectable="false"></IgbColumn>
+                <IgbColumn Field="ContactName" DataType="GridColumnDataType.String" Header="contactName" Sortable="true" Selectable="false"></IgbColumn>
+                <IgbColumn Field="ContactTitle" DataType="GridColumnDataType.String" Header="contactTitle" Sortable="true" Selectable="false"></IgbColumn>
+                <IgbColumn Field="Address.Street" DataType="GridColumnDataType.String" Header="street" Sortable="true" Selectable="false"></IgbColumn>
+                <IgbColumn Field="Address.City" DataType="GridColumnDataType.String" Header="city" Sortable="true" Selectable="false"></IgbColumn>
+                <IgbColumn Field="Address.Region" DataType="GridColumnDataType.String" Header="region" Sortable="true" Selectable="false"></IgbColumn>
+                <IgbColumn Field="Address.PostalCode" DataType="GridColumnDataType.String" Header="postalCode" Sortable="true" Selectable="false"></IgbColumn>
+                <IgbColumn Field="Address.Country" DataType="GridColumnDataType.String" Header="country" Sortable="true" Selectable="false"></IgbColumn>
+                <IgbColumn Field="Address.Phone" DataType="GridColumnDataType.String" Header="phone" Sortable="true" Selectable="false"></IgbColumn>
+            </IgbGrid>
+        </div>
+    </div>
+    <span class="new-account-dialog">Dialog not yet available in Blazor</span>
+</div>
+
+@code {
+    private IgbButton? _button;
+    private IgbDropdown? _dropdown;
+    private List<CustomersType> northwindCustomers = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        northwindCustomers = await northwindService.GetCustomers();
+    }
+    private void Navigate(string path)
+    {
+        NavigationManager.NavigateTo(path);
+    }
+}

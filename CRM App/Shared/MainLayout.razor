@@ -1,0 +1,94 @@
+@inherits LayoutComponentBase
+@inject NavigationManager NavigationManager
+
+<div class="column-layout master-view-container">
+    <div class="row-layout group">
+        <div @onclick="@(e => _navDrawer!.ToggleAsync())" class="row-layout group_1">
+            <span class="material-icons icon">
+                menu
+            </span>
+        </div>
+        <IgbNavbar class="navbar" master-view-scope>
+            <img src="assets/CRM Logo.svg" class="image" />
+            <div slot="end">
+                <IgbIconButton Variant="IconButtonVariant.Flat" class="icon-button" master-view-scope>
+                    <span class="material-icons">
+                        search
+                    </span>
+                    <IgbRipple></IgbRipple>
+                </IgbIconButton>
+                <IgbIconButton Variant="IconButtonVariant.Flat" class="icon-button" master-view-scope>
+                    <span class="material-icons">
+                        settings
+                    </span>
+                    <IgbRipple></IgbRipple>
+                </IgbIconButton>
+                <IgbIconButton Variant="IconButtonVariant.Flat" class="icon-button" master-view-scope>
+                    <span class="material-icons">
+                        notifications_none
+                    </span>
+                    <IgbRipple></IgbRipple>
+                </IgbIconButton>
+            </div>
+        </IgbNavbar>
+    </div>
+    <div class="row-layout group_2">
+        <IgbNavDrawer Open="true" Position="NavDrawerPosition.Relative" @ref="_navDrawer" class="nav-drawer" master-view-scope>
+            <IgbList class="list" master-view-scope>
+                <IgbListItem @onclick="@(e => Navigate(""))">
+                    <div slot="start">
+                        <IgbAvatar Src="assets/Home-Avatar-Icon.svg" Shape="AvatarShape.Circle" class="avatar" master-view-scope></IgbAvatar>
+                    </div>
+                    <div slot="title">Home</div>
+                </IgbListItem>
+                <IgbListItem @onclick="@(e => Navigate("accounts"))">
+                    <div slot="start">
+                        <IgbAvatar Src="assets/Accounts-Avatar-Icon.svg" Shape="AvatarShape.Circle" class="avatar" master-view-scope></IgbAvatar>
+                    </div>
+                    <div slot="title">Accounts</div>
+                </IgbListItem>
+                <IgbListItem @onclick="@(e => Navigate("contacts"))">
+                    <div slot="start">
+                        <IgbAvatar Src="assets/Contacts-Avatar-Icon.svg" Shape="AvatarShape.Circle" class="avatar" master-view-scope></IgbAvatar>
+                    </div>
+                    <div slot="title">Contacts</div>
+                </IgbListItem>
+                <IgbListItem @onclick="@(e => Navigate("contracts"))">
+                    <div slot="start">
+                        <IgbAvatar Src="assets/Contracts-Avatar-Icon.svg" Shape="AvatarShape.Circle" class="avatar" master-view-scope></IgbAvatar>
+                    </div>
+                    <div slot="title">Contracts</div>
+                </IgbListItem>
+                <IgbListItem @onclick="@(e => Navigate("reports"))">
+                    <div slot="start">
+                        <IgbAvatar Src="assets/Reports-Avatar-Icon.svg" Shape="AvatarShape.Circle" class="avatar" master-view-scope></IgbAvatar>
+                    </div>
+                    <div slot="title">Reports</div>
+                </IgbListItem>
+                <IgbListItem @onclick="@(e => Navigate("calendar"))">
+                    <div slot="start">
+                        <IgbAvatar Src="assets/Calendar-Avatar-Icon.svg" Shape="AvatarShape.Circle" class="avatar" master-view-scope></IgbAvatar>
+                    </div>
+                    <div slot="title">Calendar</div>
+                </IgbListItem>
+                <IgbListItem @onclick="@(e => Navigate("tasks"))">
+                    <div slot="start">
+                        <IgbAvatar Src="assets/Tasks-Avatar-Icon.svg" Shape="AvatarShape.Circle" class="avatar" master-view-scope></IgbAvatar>
+                    </div>
+                    <div slot="title">Tasks</div>
+                </IgbListItem>
+            </IgbList>
+        </IgbNavDrawer>
+        <div class="view-container">
+            @Body
+        </div>
+    </div>
+</div>
+
+@code {
+    private IgbNavDrawer? _navDrawer;
+    private void Navigate(string path)
+    {
+        NavigationManager.NavigateTo(path);
+    }
+}
